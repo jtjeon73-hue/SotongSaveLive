@@ -1,0 +1,36 @@
+{
+    "name": "SotongSaveLive",
+    "short_name": "SotongSaveLive",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#F4F7FA",
+    "theme_color": "#0B1F33",
+    "description": "위기 상황을 단계적으로 파악하고 행동계획을 구성하는 AI 생명구조 플랫폼",
+    "orientation": "any",
+    "lang": "ko",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
