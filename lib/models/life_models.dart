@@ -8,6 +8,7 @@ enum LifeTypeId {
   homemakerCaregiver,
   soloHousehold,
   coupleRetirement,
+  childfreeCouple,
   secondCareer,
   craftCreative,
   financiallyTight,

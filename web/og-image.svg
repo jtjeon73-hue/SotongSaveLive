@@ -1,11 +1,19 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="SotongSaveLive">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1F4D3A"/>
-      <stop offset="100%" stop-color="#6B8F71"/>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2F6B52"/>
+      <stop offset="100%" stop-color="#1F4D3A"/>
     </linearGradient>
+    <radialGradient id="sun" cx="78%" cy="28%" r="18%">
+      <stop offset="0%" stop-color="#E8C678" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#E8C678" stop-opacity="0"/>
+    </radialGradient>
   </defs>
   <rect width="1200" height="630" fill="url(#g)"/>
-  <text x="80" y="250" fill="#FFFCF7" font-family="Arial, sans-serif" font-size="68" font-weight="700">SotongSaveLive</text>
-  <text x="80" y="330" fill="#F7F3EB" font-family="Arial, sans-serif" font-size="34">AI 인생·노후설계 플랫폼</text>
+  <circle cx="940" cy="180" r="140" fill="url(#sun)"/>
+  <circle cx="940" cy="180" r="58" fill="#D4A84B"/>
+  <path d="M 860 280 C 980 340, 980 420, 880 490 C 800 540, 820 580, 900 610"
+        fill="none" stroke="#F7F3EB" stroke-width="28" stroke-linecap="round"/>
+  <text x="72" y="270" fill="#FFFCF7" font-family="Georgia, 'Times New Roman', serif" font-size="68" font-weight="700">SotongSaveLive</text>
+  <text x="72" y="350" fill="#F7F3EB" font-family="Georgia, 'Times New Roman', serif" font-size="32">AI 인생·노후설계 · 노후 주거·돌봄</text>
 </svg>

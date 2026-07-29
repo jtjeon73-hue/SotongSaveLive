@@ -226,7 +226,7 @@ class AiAnalysisPanel extends StatelessWidget {
           _block('현재 유형의 강점', card.strengths),
           _block('앞으로 커지는 위험', card.growingRisks),
           _block('놓치기 쉬운 변화', card.easyToMiss),
-          _block('선택 가능한 세 가지 경로', card.paths),
+          _block('선택 가능한 경로', card.paths),
           _block('각 경로의 장점과 대가', card.pathTradeoffs),
           _block('가장 늦기 전에 준비할 일', card.prepareBeforeLate),
           _block('배우자와 함께 결정할 일', card.decideWithSpouse),
@@ -356,6 +356,50 @@ Future<void> openExternal(String url) async {
   final uri = Uri.parse(url);
   if (await canLaunchUrl(uri)) {
     await launchUrl(uri, mode: LaunchMode.externalApplication);
+  }
+}
+
+class OfficialLinkTile extends StatelessWidget {
+  const OfficialLinkTile({
+    super.key,
+    required this.agency,
+    required this.title,
+    required this.url,
+    required this.checkedOn,
+    this.note,
+  });
+
+  final String agency;
+  final String title;
+  final String url;
+  final String checkedOn;
+  final String? note;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        InkWell(
+          onTap: () => openExternal(url),
+          child: Text(
+            '$agency — $title (확인일 $checkedOn)',
+            style: const TextStyle(
+              color: AppColors.forest,
+              decoration: TextDecoration.underline,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+        if (note != null && note!.isNotEmpty) ...[
+          const SizedBox(height: 4),
+          Text(
+            note!,
+            style: const TextStyle(color: AppColors.muted, fontSize: 13),
+          ),
+        ],
+      ],
+    );
   }
 }
 

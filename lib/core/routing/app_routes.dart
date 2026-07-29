@@ -10,6 +10,7 @@ class AppRoutes {
   static const moneyWork = '/money-work';
   static const healthLife = '/health-life';
   static const rural = '/rural';
+  static const housingCare = '/housing-care';
   static const mindLounge = '/mind-lounge';
   static const legacy = '/legacy';
 
@@ -27,6 +28,7 @@ class AppRoutes {
     ),
     (path: healthLife, label: '건강·관계·생활', icon: Icons.favorite_outline),
     (path: rural, label: '농촌과 제2의 인생', icon: Icons.agriculture_outlined),
+    (path: housingCare, label: '노후 주거·돌봄', icon: Icons.home_work_outlined),
     (path: mindLounge, label: '마음쉼터', icon: Icons.self_improvement_outlined),
     (path: legacy, label: '아름다운 마무리', icon: Icons.spa_outlined),
   ];

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-label="SotongSaveLive icon">
+  <defs>
+    <radialGradient id="sunGlow" cx="50%" cy="28%" r="22%">
+      <stop offset="0%" stop-color="#E8C678" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#E8C678" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2F6B52"/>
+      <stop offset="100%" stop-color="#1F4D3A"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1024" height="1024" rx="220" ry="220" fill="url(#bg)"/>
+  <circle cx="512" cy="286" r="180" fill="url(#sunGlow)"/>
+  <circle cx="512" cy="286" r="92" fill="#D4A84B"/>
+  <circle cx="478" cy="258" r="28" fill="#E8C678" opacity="0.85"/>
+  <path d="M 470 390 C 560 450, 560 520, 470 580 C 380 640, 380 720, 490 820 C 540 866, 560 900, 540 940"
+        fill="none" stroke="#F7F3EB" stroke-width="78" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

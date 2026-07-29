@@ -9,6 +9,7 @@ part 'life_types_public_servant.dart';
 part 'life_types_homemaker.dart';
 part 'life_types_solo.dart';
 part 'life_types_couple.dart';
+part 'life_types_childfree_couple.dart';
 part 'life_types_second_career.dart';
 part 'life_types_craft.dart';
 part 'life_types_financial.dart';
@@ -48,6 +49,7 @@ class LifeTypesData {
     _homemakerCaregiver,
     _soloHousehold,
     _coupleRetirement,
+    _childfreeCouple,
     _secondCareer,
     _craftCreative,
     _financiallyTight,

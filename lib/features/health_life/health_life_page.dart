@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../core/routing/app_routes.dart';
 import '../../core/theme/app_theme.dart';
 import '../../data/health_life_data.dart';
 import '../../data/official_sources_data.dart';
@@ -65,12 +67,40 @@ class HealthLifePage extends StatelessWidget {
           const SizedBox(height: 12),
           BranchMap(branches: HealthLifeData.branches),
           const SizedBox(height: 12),
+          SoftPanel(
+            accent: AppColors.sage,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  '주거·돌봄이 바뀌는 시점',
+                  style: TextStyle(fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  '배우자 돌봄 부담이 커지거나, 건강상태가 약해지면 '
+                  '집의 안전·재가돌봄·시설·공공주택을 단계적으로 다시 봅니다.',
+                ),
+                const SizedBox(height: 10),
+                OutlinedButton(
+                  onPressed: () =>
+                      GoRouter.of(context).go(AppRoutes.housingCare),
+                  child: const Text('노후 주거·돌봄으로 이동'),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
           const RelatedLifePathsPanel(
             title: '관계·생활과 함께 읽어볼 인생',
             links: [
               (
                 id: LifeTypeId.coupleRetirement,
                 reason: '부부 노후는 건강·시간·돌봄 역할 대화와 직결됩니다.',
+              ),
+              (
+                id: LifeTypeId.childfreeCouple,
+                reason: '자녀 없는 부부는 돌봄·의사결정·주거 Plan B를 더 깊게 준비합니다.',
               ),
               (
                 id: LifeTypeId.soloHousehold,

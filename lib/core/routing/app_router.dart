@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../app/app_shell.dart';
 import '../../features/health_life/health_life_page.dart';
 import '../../features/home/home_page.dart';
+import '../../features/housing_care/housing_care_page.dart';
 import '../../features/legacy/legacy_page.dart';
 import '../../features/life_paths/life_paths_page.dart';
 import '../../features/life_paths/life_type_detail_page.dart';
@@ -94,6 +95,14 @@ GoRouter createRouter() {
               GoRoute(
                 path: AppRoutes.rural,
                 builder: (context, state) => const RuralLifePage(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.housingCare,
+                builder: (context, state) => const HousingCarePage(),
               ),
             ],
           ),

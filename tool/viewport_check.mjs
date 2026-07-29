@@ -45,6 +45,27 @@ async function check(name, width, height) {
     Boolean(document.querySelector('flutter-view, flt-glass-pane, canvas')),
   );
 
+  await page.goto('http://127.0.0.1:8765/housing-care', {
+    waitUntil: 'networkidle',
+    timeout: 120000,
+  });
+  await page.waitForTimeout(3500);
+  const housingOk = await page.evaluate(() =>
+    Boolean(document.querySelector('flutter-view, flt-glass-pane, canvas')),
+  );
+
+  await page.goto(
+    'http://127.0.0.1:8765/life-paths/childfree-couple-retirement',
+    {
+      waitUntil: 'networkidle',
+      timeout: 120000,
+    },
+  );
+  await page.waitForTimeout(3500);
+  const childfreeOk = await page.evaluate(() =>
+    Boolean(document.querySelector('flutter-view, flt-glass-pane, canvas')),
+  );
+
   const title = await page.title();
   await browser.close();
   return {
@@ -52,6 +73,8 @@ async function check(name, width, height) {
     title,
     detailOk,
     mindOk,
+    housingOk,
+    childfreeOk,
     hasHorizontal: overflow,
     hasFiveLivesLabel: title.includes('다섯'),
     errors: errors.slice(0, 5),
@@ -72,6 +95,8 @@ process.exit(
     (r) =>
       !r.detailOk ||
       !r.mindOk ||
+      !r.housingOk ||
+      !r.childfreeOk ||
       r.hasHorizontal ||
       r.hasFiveLivesLabel ||
       r.errors.length > 0,

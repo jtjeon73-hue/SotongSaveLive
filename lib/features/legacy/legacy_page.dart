@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../core/routing/app_routes.dart';
 import '../../core/theme/app_theme.dart';
 import '../../data/legacy_data.dart';
 import '../../data/official_sources_data.dart';
@@ -83,12 +85,39 @@ class LegacyPage extends StatelessWidget {
             ),
             const SizedBox(height: 12),
           ],
+          SoftPanel(
+            accent: AppColors.forest,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  '장기요양·호스피스와 주거 전환',
+                  style: TextStyle(fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  '자녀 없는 부부의 의사결정, 한 사람이 남았을 때의 준비, '
+                  '호스피스·완화의료는 노후 주거·돌봄 메뉴와 함께 읽습니다.',
+                ),
+                const SizedBox(height: 10),
+                OutlinedButton(
+                  onPressed: () => context.go(AppRoutes.housingCare),
+                  child: const Text('노후 주거·돌봄 살펴보기'),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
           const RelatedLifePathsPanel(
             title: '마무리 준비와 함께 읽어볼 인생',
             links: [
               (
                 id: LifeTypeId.soloHousehold,
                 reason: '혼자 사는 삶은 의사결정 전달자와 서류·계정 정리가 더 중요합니다.',
+              ),
+              (
+                id: LifeTypeId.childfreeCouple,
+                reason: '자녀 없는 부부는 사별·의사결정·돌봄 공백을 더 구체적으로 준비합니다.',
               ),
               (
                 id: LifeTypeId.coupleRetirement,

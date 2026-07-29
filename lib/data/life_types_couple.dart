@@ -20,6 +20,10 @@ final _coupleRetirement = LifeTypeProfile(
       id: LifeTypeId.ruralLife,
       reason: '부부 귀촌·전원·이전은 농촌형 설계와 함께 검토합니다',
     ),
+    const RelatedLifeLink(
+      id: LifeTypeId.childfreeCouple,
+      reason: '자녀가 없을 때의 주거·돌봄·의사결정 과제는 별도 유형에서 더 깊게 다룹니다',
+    ),
   ],
   traits: [
     '두 사람의 퇴직·연금·건강·역할·기대가 서로 영향',

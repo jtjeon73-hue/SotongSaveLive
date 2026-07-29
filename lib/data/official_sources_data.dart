@@ -96,6 +96,28 @@ class OfficialSourceRepository {
       url: 'https://kostat.go.kr',
       checkedOn: checkedOn,
     ),
+    OfficialSource(
+      id: 'lh_apply',
+      agency: 'LH 청약플러스',
+      title: '공공임대·고령자주택 모집공고',
+      url: 'https://apply.lh.or.kr/',
+      checkedOn: checkedOn,
+      note: '모집 중인 공고를 상시 이용 가능한 제도로 오해하지 마세요.',
+    ),
+    OfficialSource(
+      id: 'lh_senior',
+      agency: 'LH',
+      title: '고령자 매입임대주택 안내',
+      url: 'https://www.lh.or.kr/menu.es?mid=a10401030300',
+      checkedOn: checkedOn,
+    ),
+    OfficialSource(
+      id: 'mohw_housing',
+      agency: '보건복지부',
+      title: '노인주거복지시설 안내',
+      url: 'https://www.mohw.go.kr/menu.es?mid=a10712010500',
+      checkedOn: checkedOn,
+    ),
   ];
 
   static OfficialSource? byId(String id) {

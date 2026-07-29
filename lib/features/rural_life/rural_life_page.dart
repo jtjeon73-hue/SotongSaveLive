@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../core/routing/app_routes.dart';
 import '../../core/theme/app_theme.dart';
 import '../../data/official_sources_data.dart';
 import '../../data/rural_life_data.dart';
@@ -64,6 +66,29 @@ class RuralLifePage extends StatelessWidget {
           ],
           AiAnalysisPanel(card: RuralLifeData.analysis),
           const SizedBox(height: 12),
+          SoftPanel(
+            accent: AppColors.gold,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  '농촌에서 계속 살 수 있는 조건과 이동',
+                  style: TextStyle(fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(height: 8),
+                const BulletList([
+                  '읍·중소도시 생활권 이동',
+                  '운전 중단 후 교통·병원',
+                  '지방 고령자주택·합리적인 노후주거',
+                ]),
+                OutlinedButton(
+                  onPressed: () => context.go(AppRoutes.housingCare),
+                  child: const Text('노후 주거·돌봄에서 자세히 읽기'),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
           TradeOffTable(rows: RuralLifeData.tradeOffs),
           const SizedBox(height: 12),
           BranchMap(branches: RuralLifeData.branches),
@@ -74,6 +99,10 @@ class RuralLifePage extends StatelessWidget {
               (
                 id: LifeTypeId.ruralLife,
                 reason: '이미 농촌에서 일하는 삶의 전체 전략을 이어서 볼 수 있습니다.',
+              ),
+              (
+                id: LifeTypeId.childfreeCouple,
+                reason: '자녀 없는 부부의 농촌 유지·생활권 이동 시나리오와 연결됩니다.',
               ),
               (
                 id: LifeTypeId.freelancer,

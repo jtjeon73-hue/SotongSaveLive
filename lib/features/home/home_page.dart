@@ -177,6 +177,48 @@ class HomePage extends StatelessWidget {
           ),
           const SizedBox(height: 28),
           const SectionHeader(
+            title: '노후 주거·돌봄',
+            subtitle:
+                '나이가 들수록 좋은 집은 크고 비싼 집보다, 안전하고 관리하기 쉬우며 필요한 도움과 가까운 집입니다.',
+          ),
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: [
+              for (final item in [
+                ('현재 집에서 오래 살기', Icons.home_outlined),
+                ('지방의 합리적인 노후주거', Icons.apartment_outlined),
+                ('공공 고령자주택', Icons.account_balance_outlined),
+                ('돌봄이 필요해질 때', Icons.volunteer_activism_outlined),
+              ])
+                SizedBox(
+                  width: 220,
+                  child: SoftPanel(
+                    accent: AppColors.forest,
+                    child: Row(
+                      children: [
+                        Icon(item.$2, color: AppColors.forest),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            item.$1,
+                            style: const TextStyle(fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          FilledButton(
+            onPressed: () => context.go(AppRoutes.housingCare),
+            child: const Text('노후 주거·돌봄 살펴보기'),
+          ),
+          const SizedBox(height: 28),
+          const SectionHeader(
             title: 'AI가 바라본 행복한 노후의 7가지 축',
             subtitle: '국민연금공단 노후준비 4대 영역을 기본으로, 평생일·주거·돌봄·존엄한 마무리를 더해 구성했습니다.',
           ),

@@ -78,8 +78,23 @@ void main() {
     await tester.pumpAndSettle();
     GoRouter.of(rootContext(tester)).go(AppRoutes.mindLounge);
     await tester.pumpAndSettle();
+    GoRouter.of(rootContext(tester)).go(AppRoutes.housingCare);
+    await tester.pumpAndSettle();
     expect(find.byType(TextField), findsNothing);
     expect(find.byType(TextFormField), findsNothing);
+  });
+
+  testWidgets('노후 주거·돌봄과 자녀 없는 부부 유형', (tester) async {
+    await pumpApp(tester);
+    final router = GoRouter.of(rootContext(tester));
+    router.go(AppRoutes.housingCare);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('건강할 때의 집과 돌봄이 필요할 때의 집은'), findsWidgets);
+    expect(find.textContaining('실버스테이'), findsWidgets);
+
+    router.go(AppRoutes.lifeDetail('childfree-couple-retirement'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('자녀 없이 부부가 함께 살아가는 노후'), findsWidgets);
   });
 
   testWidgets('모바일 오버플로 없음', (tester) async {

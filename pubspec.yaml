@@ -1,7 +1,7 @@
 name: sotong_save_live
 description: "SotongSaveLive AI life and retirement planning platform"
 publish_to: 'none'
-version: 1.1.0+2
+version: 1.2.0+3
 
 environment:
   sdk: ^3.12.2
