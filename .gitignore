@@ -48,3 +48,9 @@ app.*.map.json
 node_modules/
 package.json
 package-lock.json
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
