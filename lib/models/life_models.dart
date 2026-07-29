@@ -4,6 +4,23 @@ enum LifeTypeId {
   freelancer,
   businessOwner,
   ruralLife,
+  publicServant,
+  homemakerCaregiver,
+  soloHousehold,
+  coupleRetirement,
+  secondCareer,
+  craftCreative,
+  financiallyTight,
+}
+
+enum LifeTypeCategory {
+  careerRetirement,
+  keepWorking,
+  businessSkill,
+  familyCouple,
+  livingAlone,
+  rural,
+  moneyRebuild,
 }
 
 enum LifeStageId { forties, fifties, sixties, seventies, eightiesPlus }
@@ -16,6 +33,13 @@ enum LifeDomainId {
   housing,
   growthJoy,
   dignifiedEnding,
+}
+
+class RelatedLifeLink {
+  const RelatedLifeLink({required this.id, required this.reason});
+
+  final LifeTypeId id;
+  final String reason;
 }
 
 class OfficialSource {
@@ -115,8 +139,12 @@ class AiAnalysisCard {
 class LifeTypeProfile {
   const LifeTypeProfile({
     required this.id,
+    required this.slug,
     required this.title,
     required this.subtitle,
+    required this.categories,
+    required this.tags,
+    required this.relatedLinks,
     required this.traits,
     required this.biggestStrength,
     required this.easiestMissedRisk,
@@ -141,8 +169,12 @@ class LifeTypeProfile {
   });
 
   final LifeTypeId id;
+  final String slug;
   final String title;
   final String subtitle;
+  final List<LifeTypeCategory> categories;
+  final List<String> tags;
+  final List<RelatedLifeLink> relatedLinks;
   final List<String> traits;
   final String biggestStrength;
   final String easiestMissedRisk;
@@ -166,20 +198,22 @@ class LifeTypeProfile {
   final AiAnalysisCard analysis;
 }
 
-class LifeStageRoadmap {
-  const LifeStageRoadmap({
+class LegacySection {
+  const LegacySection({
     required this.id,
     required this.title,
-    required this.focus,
-    required this.items,
-    required this.scenarios,
+    required this.summary,
+    required this.points,
+    this.legalNote,
+    this.sourceIds = const [],
   });
 
-  final LifeStageId id;
+  final String id;
   final String title;
-  final String focus;
-  final List<String> items;
-  final List<RetirementScenario> scenarios;
+  final String summary;
+  final List<String> points;
+  final String? legalNote;
+  final List<String> sourceIds;
 }
 
 class RuralLifeScenario {
@@ -198,20 +232,39 @@ class RuralLifeScenario {
   final List<String> reduceFailureOrder;
 }
 
-class LegacySection {
-  const LegacySection({
+class LifeStageRoadmap {
+  const LifeStageRoadmap({
     required this.id,
     required this.title,
-    required this.summary,
-    required this.points,
-    this.legalNote,
-    this.sourceIds = const [],
+    required this.focus,
+    required this.items,
+    required this.scenarios,
   });
 
-  final String id;
+  final LifeStageId id;
   final String title;
-  final String summary;
-  final List<String> points;
-  final String? legalNote;
-  final List<String> sourceIds;
+  final String focus;
+  final List<String> items;
+  final List<RetirementScenario> scenarios;
+}
+
+extension LifeTypeCategoryLabel on LifeTypeCategory {
+  String get labelKo {
+    switch (this) {
+      case LifeTypeCategory.careerRetirement:
+        return '직장·은퇴';
+      case LifeTypeCategory.keepWorking:
+        return '계속 일하기';
+      case LifeTypeCategory.businessSkill:
+        return '사업·전문기술';
+      case LifeTypeCategory.familyCouple:
+        return '가족·부부';
+      case LifeTypeCategory.livingAlone:
+        return '혼자 사는 삶';
+      case LifeTypeCategory.rural:
+        return '농촌생활';
+      case LifeTypeCategory.moneyRebuild:
+        return '경제적 재설계';
+    }
+  }
 }

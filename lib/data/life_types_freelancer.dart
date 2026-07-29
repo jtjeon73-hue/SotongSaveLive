@@ -2,8 +2,25 @@ part of 'life_types_data.dart';
 
 final _freelancer = LifeTypeProfile(
   id: LifeTypeId.freelancer,
+  slug: 'freelancer',
   title: '프리랜서로 계속 일하는 삶',
   subtitle: '정년은 없지만 수입·건강·고객·기술이 곧 노후의 전부',
+  categories: [LifeTypeCategory.keepWorking, LifeTypeCategory.businessSkill],
+  tags: ['프리랜서', '자영업', '프로젝트', '연금', '기술'],
+  relatedLinks: [
+    const RelatedLifeLink(
+      id: LifeTypeId.craftCreative,
+      reason: '손·몸·창작 기술을 전문 노동으로 이어가는 유형과 겹칩니다',
+    ),
+    const RelatedLifeLink(
+      id: LifeTypeId.secondCareer,
+      reason: '경험을 새 분야·강의·자문으로 바꾸는 전환도 함께 검토합니다',
+    ),
+    const RelatedLifeLink(
+      id: LifeTypeId.businessOwner,
+      reason: '사업·법인·고객 구조가 커지면 경영자형 설계로 넘어갑니다',
+    ),
+  ],
   traits: [
     '소득이 프로젝트·계약·건강·경기에 따라 변동',
     '4대보험·연금·비상자금을 스스로 설계해야 함',

@@ -2,8 +2,25 @@ part of 'life_types_data.dart';
 
 final _alreadyRetired = LifeTypeProfile(
   id: LifeTypeId.alreadyRetired,
+  slug: 'already-retired',
   title: '이미 은퇴한 이후의 삶',
   subtitle: '남은 자산보다 매달 현금흐름·역할·관계·건강을 중심에 두는 생활',
+  categories: [LifeTypeCategory.careerRetirement],
+  tags: ['은퇴 후', '현금흐름', '생활비', '역할', '고립 예방'],
+  relatedLinks: [
+    const RelatedLifeLink(
+      id: LifeTypeId.employeeRetiree,
+      reason: '아직 퇴직 전이라면 전환기 설계를 먼저 검토해 보세요',
+    ),
+    const RelatedLifeLink(
+      id: LifeTypeId.financiallyTight,
+      reason: '매달 현금이 빠듯하다면 경제 재설계 관점이 도움이 됩니다',
+    ),
+    const RelatedLifeLink(
+      id: LifeTypeId.soloHousehold,
+      reason: '혼자 지내는 시간이 많다면 1인 가구형 노후도 함께 봅니다',
+    ),
+  ],
   traits: [
     '월급이 이미 사라진 상태에서 생활 중',
     '연금·저축·퇴직금·부동산 등 자산 구조가 제각각',

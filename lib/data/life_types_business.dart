@@ -2,8 +2,25 @@ part of 'life_types_data.dart';
 
 final _businessOwner = LifeTypeProfile(
   id: LifeTypeId.businessOwner,
+  slug: 'business-owner',
   title: '사업을 이어가는 삶',
   subtitle: '대표의 노후와 사업의 노후를 분리해 설계하는 경영자의 길',
+  categories: [LifeTypeCategory.businessSkill],
+  tags: ['사업', '경영', '후계', '매각', '법인'],
+  relatedLinks: [
+    const RelatedLifeLink(
+      id: LifeTypeId.freelancer,
+      reason: '대표 역할을 줄이고 개인 기술·자문 중심으로 가면 프리랜서형에 가깝습니다',
+    ),
+    const RelatedLifeLink(
+      id: LifeTypeId.secondCareer,
+      reason: '사업 축소·매각 후 제2직업·자문으로 전환하는 경우가 많습니다',
+    ),
+    const RelatedLifeLink(
+      id: LifeTypeId.ruralLife,
+      reason: '농업·체험·지역 사업과 연결되는 경우 귀촌·전원형도 함께 봅니다',
+    ),
+  ],
   traits: [
     '소득·자산·부채·세·직원·거래처·가족이 얽힌 구조',
     '대표 건강·판단·네트워크가 사업과 노후에 동시 영향',

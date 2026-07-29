@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
 import '../../data/health_life_data.dart';
 import '../../data/official_sources_data.dart';
+import '../../models/life_models.dart';
 import '../../shared/widgets/common_widgets.dart';
+import '../../shared/widgets/related_life_paths_panel.dart';
 
 class HealthLifePage extends StatelessWidget {
   const HealthLifePage({super.key});
@@ -62,6 +64,24 @@ class HealthLifePage extends StatelessWidget {
           TradeOffTable(rows: HealthLifeData.tradeOffs),
           const SizedBox(height: 12),
           BranchMap(branches: HealthLifeData.branches),
+          const SizedBox(height: 12),
+          const RelatedLifePathsPanel(
+            title: '관계·생활과 함께 읽어볼 인생',
+            links: [
+              (
+                id: LifeTypeId.coupleRetirement,
+                reason: '부부 노후는 건강·시간·돌봄 역할 대화와 직결됩니다.',
+              ),
+              (
+                id: LifeTypeId.soloHousehold,
+                reason: '1인 가구는 고립 예방과 응급·주거 설계가 특히 중요합니다.',
+              ),
+              (
+                id: LifeTypeId.homemakerCaregiver,
+                reason: '가족돌봄 중심 삶은 자기 삶과 관계의 중심 이동을 함께 봅니다.',
+              ),
+            ],
+          ),
           const SizedBox(height: 12),
           SourceFooter(
             sources: OfficialSourceRepository.sources

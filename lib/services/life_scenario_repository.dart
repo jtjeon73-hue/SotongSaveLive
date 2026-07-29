@@ -12,31 +12,51 @@ class LifeScenarioRepository {
   }
 
   LifeTypeProfile? bySlug(String slug) {
-    for (final entry in _slugToId.entries) {
-      if (entry.key == slug) return byId(entry.value);
+    for (final profile in LifeTypesData.all) {
+      if (profile.slug == slug) return profile;
     }
     return null;
   }
 
   static String slugOf(LifeTypeId id) {
-    return _idToSlug[id] ?? id.name;
+    for (final profile in LifeTypesData.all) {
+      if (profile.id == id) return profile.slug;
+    }
+    return id.name;
   }
 
-  static LifeTypeId? idFromSlug(String slug) => _slugToId[slug];
+  int indexOf(LifeTypeProfile profile) =>
+      LifeTypesData.all.indexWhere((e) => e.id == profile.id);
 
-  static const _idToSlug = <LifeTypeId, String>{
-    LifeTypeId.employeeRetiree: 'employee-retiree',
-    LifeTypeId.alreadyRetired: 'already-retired',
-    LifeTypeId.freelancer: 'freelancer',
-    LifeTypeId.businessOwner: 'business-owner',
-    LifeTypeId.ruralLife: 'rural-life',
-  };
+  LifeTypeProfile previousCyclic(LifeTypeProfile profile) {
+    final i = indexOf(profile);
+    final list = LifeTypesData.all;
+    if (i < 0) return list.first;
+    return list[(i - 1 + list.length) % list.length];
+  }
 
-  static const _slugToId = <String, LifeTypeId>{
-    'employee-retiree': LifeTypeId.employeeRetiree,
-    'already-retired': LifeTypeId.alreadyRetired,
-    'freelancer': LifeTypeId.freelancer,
-    'business-owner': LifeTypeId.businessOwner,
-    'rural-life': LifeTypeId.ruralLife,
-  };
+  LifeTypeProfile nextCyclic(LifeTypeProfile profile) {
+    final i = indexOf(profile);
+    final list = LifeTypesData.all;
+    if (i < 0) return list.first;
+    return list[(i + 1) % list.length];
+  }
+
+  List<({LifeTypeProfile profile, String reason})> relatedFor(
+    LifeTypeProfile profile,
+  ) {
+    final out = <({LifeTypeProfile profile, String reason})>[];
+    for (final link in profile.relatedLinks) {
+      final p = byId(link.id);
+      if (p != null) out.add((profile: p, reason: link.reason));
+    }
+    return out;
+  }
+
+  List<LifeTypeProfile> filterByCategory(LifeTypeCategory? category) {
+    if (category == null) return lifeTypes;
+    return lifeTypes
+        .where((p) => p.categories.contains(category))
+        .toList(growable: false);
+  }
 }

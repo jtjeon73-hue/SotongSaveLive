@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
 import '../../data/official_sources_data.dart';
 import '../../data/rural_life_data.dart';
+import '../../models/life_models.dart';
 import '../../shared/widgets/common_widgets.dart';
+import '../../shared/widgets/related_life_paths_panel.dart';
 
 class RuralLifePage extends StatelessWidget {
   const RuralLifePage({super.key});
@@ -65,6 +67,24 @@ class RuralLifePage extends StatelessWidget {
           TradeOffTable(rows: RuralLifeData.tradeOffs),
           const SizedBox(height: 12),
           BranchMap(branches: RuralLifeData.branches),
+          const SizedBox(height: 12),
+          const RelatedLifePathsPanel(
+            title: '농촌생활과 함께 읽어볼 인생',
+            links: [
+              (
+                id: LifeTypeId.ruralLife,
+                reason: '이미 농촌에서 일하는 삶의 전체 전략을 이어서 볼 수 있습니다.',
+              ),
+              (
+                id: LifeTypeId.freelancer,
+                reason: '기술·프리랜서 일과 농촌생활을 병행하는 시나리오와 연결됩니다.',
+              ),
+              (
+                id: LifeTypeId.craftCreative,
+                reason: '전문기술·창작은 농촌에서 교육·콘텐츠 수익으로 이어질 수 있습니다.',
+              ),
+            ],
+          ),
           const SizedBox(height: 12),
           SourceFooter(
             sources: OfficialSourceRepository.sources

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
 import '../../data/legacy_data.dart';
 import '../../data/official_sources_data.dart';
+import '../../models/life_models.dart';
 import '../../shared/widgets/common_widgets.dart';
+import '../../shared/widgets/related_life_paths_panel.dart';
 
 class LegacyPage extends StatelessWidget {
   const LegacyPage({super.key});
@@ -81,6 +83,24 @@ class LegacyPage extends StatelessWidget {
             ),
             const SizedBox(height: 12),
           ],
+          const RelatedLifePathsPanel(
+            title: '마무리 준비와 함께 읽어볼 인생',
+            links: [
+              (
+                id: LifeTypeId.soloHousehold,
+                reason: '혼자 사는 삶은 의사결정 전달자와 서류·계정 정리가 더 중요합니다.',
+              ),
+              (
+                id: LifeTypeId.coupleRetirement,
+                reason: '부부 노후는 한 사람이 먼저 아프거나 사별했을 때의 준비를 함께 봅니다.',
+              ),
+              (
+                id: LifeTypeId.alreadyRetired,
+                reason: '이미 은퇴한 뒤에는 정리·돌봄·존엄한 마무리를 더 구체적으로 준비합니다.',
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
           SourceFooter(
             sources: OfficialSourceRepository.sources
                 .where(

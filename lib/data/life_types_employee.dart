@@ -2,8 +2,25 @@ part of 'life_types_data.dart';
 
 final _employeeRetiree = LifeTypeProfile(
   id: LifeTypeId.employeeRetiree,
+  slug: 'employee-retiree',
   title: '직장생활 후 은퇴하는 삶',
   subtitle: '월급·명함·역할이 사라진 뒤, 현금흐름과 정체성을 다시 설계하는 경로',
+  categories: [LifeTypeCategory.careerRetirement],
+  tags: ['정년퇴직', '퇴직금', '연금', '제2직업', '부분은퇴'],
+  relatedLinks: [
+    const RelatedLifeLink(
+      id: LifeTypeId.secondCareer,
+      reason: '퇴직 전후 제2직업·자문·시간제로 소득 공백을 줄이는 경로',
+    ),
+    const RelatedLifeLink(
+      id: LifeTypeId.publicServant,
+      reason: '공무원·공공기관도 정년·연금·역할 전환 구조가 비슷합니다',
+    ),
+    const RelatedLifeLink(
+      id: LifeTypeId.alreadyRetired,
+      reason: '이미 퇴직했다면 남은 현금흐름·역할 중심 설계로 이어집니다',
+    ),
+  ],
   traits: [
     '정년·퇴직 시점이 비교적 예측 가능',
     '퇴직금·퇴직연금·4대보험 등 제도적 층이 있음',

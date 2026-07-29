@@ -1,6 +1,6 @@
 import { chromium } from 'playwright';
 
-async function checkViewport(name, width, height) {
+async function check(name, width, height) {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: { width, height } });
   const errors = [];
@@ -13,51 +13,48 @@ async function checkViewport(name, width, height) {
     }
   });
 
-  await page.goto('http://127.0.0.1:8765/', {
+  await page.goto('http://127.0.0.1:8765/life-paths', {
     waitUntil: 'networkidle',
     timeout: 120000,
   });
   await page.waitForSelector('flutter-view, flt-glass-pane, canvas', {
     timeout: 120000,
   });
-  await page.waitForTimeout(5000);
+  await page.waitForTimeout(4000);
 
   const overflow = await page.evaluate(() => {
     const doc = document.documentElement;
-    const body = document.body;
-    return {
-      hasHorizontal:
-        doc.scrollWidth > doc.clientWidth + 2 ||
-        body.scrollWidth > body.clientWidth + 2,
-    };
+    return doc.scrollWidth > doc.clientWidth + 2;
   });
 
-  const title = await page.title();
-  const hasOldCrisisTitle = title.includes('생명구조');
-
-  await page.goto('http://127.0.0.1:8765/five-lives', {
+  await page.goto('http://127.0.0.1:8765/life-paths/freelancer', {
     waitUntil: 'networkidle',
     timeout: 120000,
   });
-  await page.waitForTimeout(4000);
-  const refreshOk = await page.evaluate(() =>
-    Boolean(
-      document.querySelector('flutter-view') ||
-        document.querySelector('flt-glass-pane') ||
-        document.querySelector('canvas'),
-    ),
+  await page.waitForTimeout(3500);
+  const detailOk = await page.evaluate(() =>
+    Boolean(document.querySelector('flutter-view, flt-glass-pane, canvas')),
   );
 
+  await page.goto('http://127.0.0.1:8765/mind-lounge', {
+    waitUntil: 'networkidle',
+    timeout: 120000,
+  });
+  await page.waitForTimeout(3500);
+  const mindOk = await page.evaluate(() =>
+    Boolean(document.querySelector('flutter-view, flt-glass-pane, canvas')),
+  );
+
+  const title = await page.title();
   await browser.close();
   return {
     name,
-    width,
-    height,
     title,
-    hasOldCrisisTitle,
-    refreshOk,
-    hasHorizontal: overflow.hasHorizontal,
-    errors: errors.slice(0, 8),
+    detailOk,
+    mindOk,
+    hasHorizontal: overflow,
+    hasFiveLivesLabel: title.includes('다섯'),
+    errors: errors.slice(0, 5),
   };
 }
 
@@ -67,15 +64,18 @@ for (const v of [
   ['tablet', 768, 1024],
   ['desktop', 1440, 900],
 ]) {
-  results.push(await checkViewport(...v));
+  results.push(await check(...v));
 }
 console.log(JSON.stringify(results, null, 2));
-const failed = results.some(
-  (r) =>
-    !r.refreshOk ||
-    r.hasHorizontal ||
-    r.hasOldCrisisTitle ||
-    !r.title.includes('SotongSaveLive') ||
-    r.errors.length > 0,
+process.exit(
+  results.some(
+    (r) =>
+      !r.detailOk ||
+      !r.mindOk ||
+      r.hasHorizontal ||
+      r.hasFiveLivesLabel ||
+      r.errors.length > 0,
+  )
+    ? 1
+    : 0,
 );
-process.exit(failed ? 1 : 0);

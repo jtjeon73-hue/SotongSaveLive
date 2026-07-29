@@ -5,6 +5,7 @@ import '../../core/routing/app_routes.dart';
 import '../../core/theme/app_theme.dart';
 import '../../data/official_sources_data.dart';
 import '../../services/life_scenario_repository.dart';
+import '../../services/mind_essay_repository.dart';
 import '../../shared/widgets/common_widgets.dart';
 
 class HomePage extends StatelessWidget {
@@ -40,7 +41,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final types = LifeScenarioRepository().lifeTypes;
+    final types = LifeScenarioRepository().lifeTypes.take(6).toList();
+    final essays = MindEssayRepository().all.take(3).toList();
+
     return PageScaffoldBody(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -89,7 +92,9 @@ class HomePage extends StatelessWidget {
           const SizedBox(height: 28),
           const SectionHeader(
             title: '나는 어떤 삶에 가까운가요?',
-            subtitle: '정보를 입력하지 않아도 됩니다. 유형을 눌러 읽고 자신의 삶과 비교해 보세요.',
+            subtitle:
+                '사람의 삶은 한 가지 기준으로 나눌 수 없습니다. '
+                '여러 노후맞이 인생을 읽어보고 자신과 가까운 삶을 참고해 보세요.',
           ),
           const SizedBox(height: 12),
           Wrap(
@@ -101,11 +106,7 @@ class HomePage extends StatelessWidget {
                   width: 280,
                   child: SoftPanel(
                     child: InkWell(
-                      onTap: () => context.go(
-                        AppRoutes.lifeDetail(
-                          LifeScenarioRepository.slugOf(t.id),
-                        ),
-                      ),
+                      onTap: () => context.go(AppRoutes.lifeDetail(t.slug)),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -133,12 +134,51 @@ class HomePage extends StatelessWidget {
                 ),
             ],
           ),
+          const SizedBox(height: 12),
+          FilledButton(
+            onPressed: () => context.go(AppRoutes.lifePaths),
+            child: const Text('더 많은 노후맞이 인생 보기'),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            '다양한 삶이 계속 추가될 수 있습니다. 고정된 분류가 아닙니다.',
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: AppColors.muted),
+          ),
+          const SizedBox(height: 28),
+          const SectionHeader(
+            title: '마음쉼터',
+            subtitle: '계획도 중요하지만 마음의 평안도 필요합니다.',
+          ),
+          const SizedBox(height: 12),
+          for (final e in essays) ...[
+            SoftPanel(
+              accent: AppColors.sage,
+              child: InkWell(
+                onTap: () => context.go(AppRoutes.mindEssay(e.slug)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      e.title,
+                      style: const TextStyle(fontWeight: FontWeight.w800),
+                    ),
+                    Text(e.subtitle),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+          OutlinedButton(
+            onPressed: () => context.go(AppRoutes.mindLounge),
+            child: const Text('마음쉼터에서 조용히 읽기'),
+          ),
           const SizedBox(height: 28),
           const SectionHeader(
             title: 'AI가 바라본 행복한 노후의 7가지 축',
-            subtitle:
-                '국민연금공단 노후준비 4대 영역(재무·건강·여가·대인관계)을 기본으로, '
-                '평생일·주거·돌봄·존엄한 마무리를 더해 구성했습니다.',
+            subtitle: '국민연금공단 노후준비 4대 영역을 기본으로, 평생일·주거·돌봄·존엄한 마무리를 더해 구성했습니다.',
           ),
           const SizedBox(height: 12),
           SoftPanel(

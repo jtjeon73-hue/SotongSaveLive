@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/theme/app_theme.dart';
@@ -19,6 +20,48 @@ class PageScaffoldBody extends StatelessWidget {
           constraints: BoxConstraints(maxWidth: maxWidth),
           child: child,
         ),
+      ),
+    );
+  }
+}
+
+class BreadcrumbBar extends StatelessWidget {
+  const BreadcrumbBar({super.key, required this.items});
+
+  final List<({String label, String? path})> items;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: '경로 탐색',
+      child: Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          for (var i = 0; i < items.length; i++) ...[
+            if (i > 0)
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 6),
+                child: Text('›', style: TextStyle(color: AppColors.muted)),
+              ),
+            if (items[i].path != null)
+              InkWell(
+                onTap: () => GoRouter.of(context).go(items[i].path!),
+                child: Text(
+                  items[i].label,
+                  style: const TextStyle(
+                    color: AppColors.forest,
+                    fontWeight: FontWeight.w700,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              )
+            else
+              Text(
+                items[i].label,
+                style: const TextStyle(fontWeight: FontWeight.w700),
+              ),
+          ],
+        ],
       ),
     );
   }

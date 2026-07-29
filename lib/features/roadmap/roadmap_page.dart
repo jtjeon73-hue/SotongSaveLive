@@ -5,6 +5,7 @@ import '../../data/official_sources_data.dart';
 import '../../models/life_models.dart';
 import '../../services/life_roadmap_service.dart';
 import '../../shared/widgets/common_widgets.dart';
+import '../../shared/widgets/related_life_paths_panel.dart';
 
 class RoadmapPage extends StatefulWidget {
   const RoadmapPage({super.key});
@@ -81,6 +82,24 @@ class _RoadmapPageState extends State<RoadmapPage> {
             ScenarioPanel(scenario: sc),
             const SizedBox(height: 12),
           ],
+          const RelatedLifePathsPanel(
+            title: '이 시기와 함께 읽어볼 노후맞이 인생',
+            links: [
+              (
+                id: LifeTypeId.employeeRetiree,
+                reason: '직장 은퇴 전환은 연령대 로드맵과 함께 보면 준비 순서가 명확해집니다.',
+              ),
+              (
+                id: LifeTypeId.secondCareer,
+                reason: '재취업·제2직업은 50~60대 로드맵의 소득 전환과 맞물립니다.',
+              ),
+              (
+                id: LifeTypeId.coupleRetirement,
+                reason: '부부 공동 계획은 전 연령대 관계·주거 선택에 영향을 줍니다.',
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
           SourceFooter(
             sources: OfficialSourceRepository.sources.take(5).toList(),
           ),

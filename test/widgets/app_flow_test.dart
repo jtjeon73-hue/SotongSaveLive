@@ -17,70 +17,69 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('홈에서 다섯 가지 인생으로 이동', (tester) async {
-    await pumpApp(tester);
-    expect(find.textContaining('나답게'), findsWidgets);
+  BuildContext rootContext(WidgetTester tester) =>
+      tester.element(find.byType(Scaffold).first);
 
-    final menu = find.byTooltip('메뉴');
-    if (menu.evaluate().isNotEmpty) {
-      await tester.tap(menu);
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('다섯 가지 인생'));
-      await tester.pumpAndSettle();
-    } else {
-      await tester.tap(find.text('다섯 가지 인생').first);
-      await tester.pumpAndSettle();
-    }
-    expect(find.textContaining('다섯 가지 인생'), findsWidgets);
+  testWidgets('노후맞이 인생들 목록 진입', (tester) async {
+    await pumpApp(tester);
+    GoRouter.of(rootContext(tester)).go(AppRoutes.lifePaths);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('노후맞이 인생들'), findsWidgets);
+    expect(find.text('이 인생 살펴보기'), findsWidgets);
   });
 
-  testWidgets('인생 유형 상세화면 이동', (tester) async {
+  testWidgets('상세에서 다른 유형 칩으로 이동', (tester) async {
     await pumpApp(tester);
-    final menu = find.byTooltip('메뉴');
-    if (menu.evaluate().isNotEmpty) {
-      await tester.tap(menu);
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('다섯 가지 인생'));
-      await tester.pumpAndSettle();
-    }
-    await tester.ensureVisible(find.text('이 인생 자세히 읽기').first);
-    await tester.tap(find.text('이 인생 자세히 읽기').first);
+    final router = GoRouter.of(rootContext(tester));
+    router.go(AppRoutes.lifeDetail('freelancer'));
     await tester.pumpAndSettle();
-    expect(find.textContaining('AI 인생분석'), findsWidgets);
+    expect(find.textContaining('다른 노후맞이 인생 보기'), findsOneWidget);
+    expect(find.textContaining('프리랜서'), findsWidgets);
+
+    await tester.ensureVisible(find.text('직장생활 후 은퇴하는 삶').first);
+    await tester.tap(find.text('직장생활 후 은퇴하는 삶').first);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('직장생활 후 은퇴'), findsWidgets);
   });
 
-  testWidgets('연령대별 로드맵 전환', (tester) async {
+  testWidgets('breadcrumb로 전체 목록 복귀', (tester) async {
     await pumpApp(tester);
-    final menu = find.byTooltip('메뉴');
-    if (menu.evaluate().isNotEmpty) {
-      await tester.tap(menu);
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('AI 인생로드맵'));
-      await tester.pumpAndSettle();
-    } else {
-      await tester.tap(find.text('AI 인생로드맵').first);
-      await tester.pumpAndSettle();
-    }
-    expect(find.textContaining('인생로드맵'), findsWidgets);
-    final chip = find.byType(ChoiceChip).at(1);
-    await tester.tap(chip);
+    GoRouter.of(rootContext(tester)).go(AppRoutes.lifeDetail('rural-life'));
     await tester.pumpAndSettle();
-    expect(find.textContaining('시나리오'), findsWidgets);
+    await tester.tap(find.text('노후맞이 인생들').first);
+    await tester.pumpAndSettle();
+    expect(find.text('이 인생 살펴보기'), findsWidgets);
   });
 
-  testWidgets('아름다운 마무리 화면 접근', (tester) async {
+  testWidgets('마음쉼터 목록과 상세', (tester) async {
     await pumpApp(tester);
-    final ctx = tester.element(find.byType(Scaffold).first);
-    GoRouter.of(ctx).go(AppRoutes.legacy);
+    GoRouter.of(rootContext(tester)).go(AppRoutes.mindLounge);
     await tester.pumpAndSettle();
-    expect(find.textContaining('사전연명의료의향서'), findsWidgets);
+    expect(find.textContaining('마음쉼터'), findsWidgets);
+    expect(find.text('조용히 읽기'), findsWidgets);
+
+    GoRouter.of(rootContext(tester)).go(AppRoutes.mindEssay('today-remains'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('오늘 기억할 한 문장'), findsOneWidget);
+    expect(find.textContaining('잠시 생각해 볼 내용'), findsOneWidget);
+  });
+
+  testWidgets('잘못된 slug는 목록 안내', (tester) async {
+    await pumpApp(tester);
+    GoRouter.of(rootContext(tester)).go(AppRoutes.lifeDetail('no-such-type'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('찾을 수 없습니다'), findsWidgets);
+    expect(find.text('노후맞이 인생들 전체보기'), findsOneWidget);
   });
 
   testWidgets('입력 필드가 없다', (tester) async {
     await pumpApp(tester);
+    GoRouter.of(rootContext(tester)).go(AppRoutes.lifePaths);
+    await tester.pumpAndSettle();
+    GoRouter.of(rootContext(tester)).go(AppRoutes.mindLounge);
+    await tester.pumpAndSettle();
     expect(find.byType(TextField), findsNothing);
     expect(find.byType(TextFormField), findsNothing);
-    expect(find.byType(EditableText), findsNothing);
   });
 
   testWidgets('모바일 오버플로 없음', (tester) async {
@@ -98,6 +97,8 @@ void main() {
       FlutterError.onError = old;
     });
     await pumpApp(tester);
+    GoRouter.of(rootContext(tester)).go(AppRoutes.lifeDetail('solo-household'));
+    await tester.pumpAndSettle();
     expect(overflows, isEmpty);
   });
 }

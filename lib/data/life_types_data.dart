@@ -5,6 +5,13 @@ part 'life_types_already_retired.dart';
 part 'life_types_freelancer.dart';
 part 'life_types_business.dart';
 part 'life_types_rural_profile.dart';
+part 'life_types_public_servant.dart';
+part 'life_types_homemaker.dart';
+part 'life_types_solo.dart';
+part 'life_types_couple.dart';
+part 'life_types_second_career.dart';
+part 'life_types_craft.dart';
+part 'life_types_financial.dart';
 
 RetirementScenario _scenario({
   required String id,
@@ -37,5 +44,12 @@ class LifeTypesData {
     _freelancer,
     _businessOwner,
     _ruralLife,
+    _publicServant,
+    _homemakerCaregiver,
+    _soloHousehold,
+    _coupleRetirement,
+    _secondCareer,
+    _craftCreative,
+    _financiallyTight,
   ];
 }

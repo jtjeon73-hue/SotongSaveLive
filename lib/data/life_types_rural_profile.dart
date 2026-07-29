@@ -2,8 +2,25 @@ part of 'life_types_data.dart';
 
 final _ruralLife = LifeTypeProfile(
   id: LifeTypeId.ruralLife,
+  slug: 'rural-life',
   title: '농촌에서 일하고 생활하는 삶',
   subtitle: '자연·여유와 체력·소득 변동·의료·고립을 함께 설계하는 제2의 인생',
+  categories: [LifeTypeCategory.rural],
+  tags: ['귀촌', '농촌', '전원', '농업', '의료 접근'],
+  relatedLinks: [
+    const RelatedLifeLink(
+      id: LifeTypeId.coupleRetirement,
+      reason: '부부가 함께 이전·생활하는 귀촌·전원은 부부 은퇴형과 맞닿습니다',
+    ),
+    const RelatedLifeLink(
+      id: LifeTypeId.craftCreative,
+      reason: '가공·공예·체험·온라인 판매로 소득을 보완하는 경우가 많습니다',
+    ),
+    const RelatedLifeLink(
+      id: LifeTypeId.businessOwner,
+      reason: '농업·체험·가공을 사업 단위로 키우면 경영자형 설계가 필요합니다',
+    ),
+  ],
   traits: [
     '농업·귀촌·전원·임야·체험·온라인 등 다양한 형태',
     '소득·날씨·가격·체력·기계·토지·이웃·배우자와 연결',

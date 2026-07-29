@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
 import '../../data/money_work_data.dart';
 import '../../data/official_sources_data.dart';
+import '../../models/life_models.dart';
 import '../../shared/widgets/common_widgets.dart';
+import '../../shared/widgets/related_life_paths_panel.dart';
 
 class MoneyWorkPage extends StatelessWidget {
   const MoneyWorkPage({super.key});
@@ -88,6 +90,24 @@ class MoneyWorkPage extends StatelessWidget {
           TradeOffTable(rows: MoneyWorkData.tradeOffs),
           const SizedBox(height: 12),
           BranchMap(branches: MoneyWorkData.branches),
+          const SizedBox(height: 12),
+          const RelatedLifePathsPanel(
+            title: '돈·일과 함께 읽어볼 인생',
+            links: [
+              (
+                id: LifeTypeId.secondCareer,
+                reason: '재취업·제2직업은 평생일과 소득 구조를 다시 설계할 때 참고합니다.',
+              ),
+              (
+                id: LifeTypeId.craftCreative,
+                reason: '전문기술·창작은 경험을 수익으로 바꾸는 경로와 맞닿아 있습니다.',
+              ),
+              (
+                id: LifeTypeId.financiallyTight,
+                reason: '경제적 재설계가 필요할 때 현금흐름·고정비부터 보는 관점을 제공합니다.',
+              ),
+            ],
+          ),
           const SizedBox(height: 12),
           SourceFooter(
             sources: OfficialSourceRepository.sources

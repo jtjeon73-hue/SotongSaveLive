@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>/</loc></url>
-  <url><loc>/five-lives</loc></url>
+  <url><loc>/life-paths</loc></url>
   <url><loc>/roadmap</loc></url>
   <url><loc>/money-work</loc></url>
   <url><loc>/health-life</loc></url>
   <url><loc>/rural</loc></url>
+  <url><loc>/mind-lounge</loc></url>
   <url><loc>/legacy</loc></url>
 </urlset>
