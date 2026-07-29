@@ -8,13 +8,7 @@ async function checkViewport(name, width, height) {
   page.on('console', (msg) => {
     if (msg.type() === 'error') {
       const t = msg.text();
-      if (
-        t.includes('Google Fonts') ||
-        t.includes('fonts.gstatic') ||
-        t.includes('Failed to load font')
-      ) {
-        return;
-      }
+      if (t.includes('Google Fonts') || t.includes('fonts.gstatic')) return;
       errors.push(t);
     }
   });
@@ -26,7 +20,7 @@ async function checkViewport(name, width, height) {
   await page.waitForSelector('flutter-view, flt-glass-pane, canvas', {
     timeout: 120000,
   });
-  await page.waitForTimeout(6000);
+  await page.waitForTimeout(5000);
 
   const overflow = await page.evaluate(() => {
     const doc = document.documentElement;
@@ -38,39 +32,30 @@ async function checkViewport(name, width, height) {
     };
   });
 
-  const flutterMounted = await page.evaluate(() => {
-    return Boolean(
-      document.querySelector('flutter-view') ||
-        document.querySelector('flt-glass-pane') ||
-        document.querySelector('canvas'),
-    );
-  });
+  const title = await page.title();
+  const hasOldCrisisTitle = title.includes('생명구조');
 
-  await page.goto('http://127.0.0.1:8765/assess', {
+  await page.goto('http://127.0.0.1:8765/five-lives', {
     waitUntil: 'networkidle',
     timeout: 120000,
   });
-  await page.waitForSelector('flutter-view, flt-glass-pane, canvas', {
-    timeout: 120000,
-  });
-  await page.waitForTimeout(5000);
-  const refreshOk = await page.evaluate(() => {
-    return Boolean(
+  await page.waitForTimeout(4000);
+  const refreshOk = await page.evaluate(() =>
+    Boolean(
       document.querySelector('flutter-view') ||
         document.querySelector('flt-glass-pane') ||
         document.querySelector('canvas'),
-    );
-  });
+    ),
+  );
 
-  const title = await page.title();
   await browser.close();
   return {
     name,
     width,
     height,
-    flutterMounted,
-    refreshOk,
     title,
+    hasOldCrisisTitle,
+    refreshOk,
     hasHorizontal: overflow.hasHorizontal,
     errors: errors.slice(0, 8),
   };
@@ -87,9 +72,9 @@ for (const v of [
 console.log(JSON.stringify(results, null, 2));
 const failed = results.some(
   (r) =>
-    !r.flutterMounted ||
     !r.refreshOk ||
     r.hasHorizontal ||
+    r.hasOldCrisisTitle ||
     !r.title.includes('SotongSaveLive') ||
     r.errors.length > 0,
 );

@@ -1,0 +1,109 @@
+import 'package:flutter/material.dart';
+
+import '../../core/theme/app_theme.dart';
+import '../../data/official_sources_data.dart';
+import '../../data/rural_life_data.dart';
+import '../../shared/widgets/common_widgets.dart';
+
+class RuralLifePage extends StatelessWidget {
+  const RuralLifePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return PageScaffoldBody(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const SectionHeader(
+            title: '농촌과 제2의 인생',
+            subtitle: '낭만만 말하지 않습니다. 체력·의료·교통·소득 변동과 관계까지 함께 읽습니다.',
+          ),
+          const SizedBox(height: 16),
+          _block('농촌으로 가기 전', RuralLifeData.beforeMove),
+          _block('농촌에서 살아가기', RuralLifeData.livingThere),
+          _block('고령 농촌생활', RuralLifeData.agingRural),
+          const SectionHeader(title: 'AI가 분석한 농촌생활 시나리오'),
+          const SizedBox(height: 8),
+          for (final s in RuralLifeData.scenarios) ...[
+            SoftPanel(
+              accent: AppColors.forest,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    s.title,
+                    style: const TextStyle(fontWeight: FontWeight.w800),
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    '장점',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  BulletList(s.pros),
+                  const Text(
+                    '위험',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  BulletList(s.risks),
+                  const Text(
+                    '필요한 준비',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  BulletList(s.neededPrep),
+                  const Text(
+                    '실패 가능성을 줄이는 순서',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  BulletList(s.reduceFailureOrder),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
+          ],
+          AiAnalysisPanel(card: RuralLifeData.analysis),
+          const SizedBox(height: 12),
+          TradeOffTable(rows: RuralLifeData.tradeOffs),
+          const SizedBox(height: 12),
+          BranchMap(branches: RuralLifeData.branches),
+          const SizedBox(height: 12),
+          SourceFooter(
+            sources: OfficialSourceRepository.sources
+                .where(
+                  (s) =>
+                      s.id == 'greendaero' ||
+                      s.id == 'mafra' ||
+                      s.id == 'rda' ||
+                      s.id == 'kostat',
+                )
+                .toList(),
+          ),
+          const SiteFooter(),
+        ],
+      ),
+    );
+  }
+
+  Widget _block(String title, List<(String, List<String>)> topics) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SectionHeader(title: title),
+        const SizedBox(height: 8),
+        for (final t in topics) ...[
+          SoftPanel(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(t.$1, style: const TextStyle(fontWeight: FontWeight.w800)),
+                const SizedBox(height: 6),
+                BulletList(t.$2),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+        ],
+        const SizedBox(height: 12),
+      ],
+    );
+  }
+}

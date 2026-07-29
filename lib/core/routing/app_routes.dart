@@ -1,30 +1,27 @@
+import 'package:flutter/material.dart';
+
 class AppRoutes {
   static const home = '/';
-  static const assess = '/assess';
-  static const witness = '/witness';
-  static const command = '/command';
-  static const riskPredict = '/risk-predict';
-  static const family = '/family';
-  static const industrial = '/industrial';
-  static const twin = '/twin';
-  static const report = '/report';
-  static const followUp = '/follow-up';
-  static const aiLab = '/ai-lab';
-  static const trust = '/trust';
-  static const notFound = '/404';
+  static const fiveLives = '/five-lives';
+  static const roadmap = '/roadmap';
+  static const moneyWork = '/money-work';
+  static const healthLife = '/health-life';
+  static const rural = '/rural';
+  static const legacy = '/legacy';
 
-  static const labels = <String, String>{
-    home: '홈',
-    assess: 'AI 상황판단',
-    witness: '다른 사람 구조',
-    command: '생명구조 지휘센터',
-    riskPredict: '위험예측센터',
-    family: '가족 안전 연결',
-    industrial: '농촌·산업 관제',
-    twin: '안전 디지털 트윈',
-    report: '상황보고서',
-    followUp: '사건 추적',
-    aiLab: 'AI 기술연구소',
-    trust: '신뢰·안전·출처',
-  };
+  static String lifeDetail(String type) => '/five-lives/$type';
+
+  static const destinations = <({String path, String label, IconData icon})>[
+    (path: home, label: '홈', icon: Icons.home_outlined),
+    (path: fiveLives, label: '다섯 가지 인생', icon: Icons.diversity_3_outlined),
+    (path: roadmap, label: 'AI 인생로드맵', icon: Icons.timeline_outlined),
+    (
+      path: moneyWork,
+      label: '돈과 평생일',
+      icon: Icons.account_balance_wallet_outlined,
+    ),
+    (path: healthLife, label: '건강·관계·생활', icon: Icons.favorite_outline),
+    (path: rural, label: '농촌과 제2의 인생', icon: Icons.agriculture_outlined),
+    (path: legacy, label: '아름다운 마무리', icon: Icons.spa_outlined),
+  ];
 }

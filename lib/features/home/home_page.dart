@@ -3,205 +3,214 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/routing/app_routes.dart';
 import '../../core/theme/app_theme.dart';
+import '../../data/official_sources_data.dart';
+import '../../services/life_scenario_repository.dart';
 import '../../shared/widgets/common_widgets.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
+  static const _axes = [
+    '안정적인 현금흐름',
+    '부담 없이 계속할 수 있는 일',
+    '움직일 수 있는 건강',
+    '배우자·가족·친구와의 관계',
+    '편안하고 안전한 주거',
+    '배우고 즐기고 기여하는 시간',
+    '자신의 뜻을 존중받는 삶의 마무리',
+  ];
 
-class _HomePageState extends State<HomePage> {
-  final _input = TextEditingController();
+  static const _timeline = [
+    ('40대', '기반을 만드는 시기'),
+    ('50대', '전환을 준비하는 시기'),
+    ('60대', '일과 삶을 다시 배치하는 시기'),
+    ('70대', '건강과 관계를 중심에 두는 시기'),
+    ('80대 이후', '돌봄과 존엄을 준비하는 시기'),
+  ];
 
-  @override
-  void dispose() {
-    _input.dispose();
-    super.dispose();
-  }
+  static const _checks = [
+    '연금과 고정수입 확인',
+    '불필요한 고정지출 확인',
+    '앞으로 계속할 일 한 가지',
+    '배우자와 함께할 시간',
+    '근력과 보행능력 관리',
+    '집의 안전성과 이동 편의',
+    '마지막 삶에 대한 가족대화',
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final wide = constraints.maxWidth >= 900;
-        return SingleChildScrollView(
-          padding: EdgeInsets.symmetric(
-            horizontal: wide ? 48 : 16,
-            vertical: 24,
+    final types = LifeScenarioRepository().lifeTypes;
+    return PageScaffoldBody(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(28),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [AppColors.forest, Color(0xFF2F6B52)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'SotongSaveLive',
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                const SizedBox(height: 14),
+                Text(
+                  '오래 사는 것보다 중요한 것은\n남은 시간을 나답게 살아가는 것입니다.',
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: Colors.white,
+                    height: 1.4,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 14),
+                Text(
+                  'SotongSaveLive는 2026년 이후의 변화된 일자리, 연금, 건강, 가족, '
+                  '농촌생활과 존엄한 삶의 마무리까지 AI 관점으로 연결해 보여주는 '
+                  '인생·노후설계 플랫폼입니다.',
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: Colors.white.withValues(alpha: 0.95),
+                  ),
+                ),
+              ],
+            ),
           ),
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 980),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(28),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [AppColors.navy, AppColors.navySoft],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+          const SizedBox(height: 28),
+          const SectionHeader(
+            title: '나는 어떤 삶에 가까운가요?',
+            subtitle: '정보를 입력하지 않아도 됩니다. 유형을 눌러 읽고 자신의 삶과 비교해 보세요.',
+          ),
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: [
+              for (final t in types)
+                SizedBox(
+                  width: 280,
+                  child: SoftPanel(
+                    child: InkWell(
+                      onTap: () => context.go(
+                        AppRoutes.lifeDetail(
+                          LifeScenarioRepository.slugOf(t.id),
+                        ),
                       ),
-                      borderRadius: BorderRadius.circular(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            t.title,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(t.subtitle),
+                          const SizedBox(height: 8),
+                          const Text(
+                            '자세히 읽기 →',
+                            style: TextStyle(
+                              color: AppColors.forest,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    child: Column(
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 28),
+          const SectionHeader(
+            title: 'AI가 바라본 행복한 노후의 7가지 축',
+            subtitle:
+                '국민연금공단 노후준비 4대 영역(재무·건강·여가·대인관계)을 기본으로, '
+                '평생일·주거·돌봄·존엄한 마무리를 더해 구성했습니다.',
+          ),
+          const SizedBox(height: 12),
+          SoftPanel(
+            child: Column(
+              children: [
+                for (var i = 0; i < _axes.length; i++)
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: CircleAvatar(
+                      backgroundColor: AppColors.sand,
+                      child: Text(
+                        '${i + 1}',
+                        style: const TextStyle(
+                          color: AppColors.forest,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                    title: Text(_axes[i]),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 28),
+          const SectionHeader(
+            title: '인생은 한 번에 바뀌지 않습니다',
+            subtitle: '연령 흐름을 따라 준비의 중심이 어떻게 옮겨가는지 봅니다.',
+          ),
+          const SizedBox(height: 12),
+          SoftPanel(
+            accent: AppColors.gold,
+            child: Column(
+              children: [
+                for (final item in _timeline)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'SotongSaveLive',
-                          style: Theme.of(context).textTheme.displaySmall
-                              ?.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w900,
-                              ),
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          '무슨 말을 해야 할지 몰라도 괜찮습니다.\n'
-                          '현재 상황을 편하게 말씀해 주세요.\n'
-                          'AI가 가장 위험한 부분부터 하나씩 확인합니다.',
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(
-                                color: Colors.white.withValues(alpha: 0.95),
-                                height: 1.5,
-                                fontSize: 18,
-                              ),
-                        ),
-                        const SizedBox(height: 20),
-                        FilledButton.icon(
-                          style: FilledButton.styleFrom(
-                            backgroundColor: AppColors.teal,
-                            minimumSize: const Size.fromHeight(56),
+                        SizedBox(
+                          width: 88,
+                          child: Text(
+                            item.$1,
+                            style: const TextStyle(fontWeight: FontWeight.w800),
                           ),
-                          onPressed: () => context.go(AppRoutes.assess),
-                          icon: const Icon(Icons.emergency),
-                          label: const Text('지금 위험한 상황인가요?'),
                         ),
+                        Expanded(child: Text(item.$2)),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 24),
-                  const SafetyDisclaimerBanner(),
-                  const SizedBox(height: 24),
-                  const SectionHeader(
-                    title: 'AI 상황판단 바로 시작',
-                    subtitle: '검색 요약이 아니라, 지금 입력한 상황에 맞춰 질문과 계획이 달라집니다.',
-                  ),
-                  const SizedBox(height: 12),
-                  TextField(
-                    controller: _input,
-                    minLines: 3,
-                    maxLines: 5,
-                    decoration: const InputDecoration(
-                      hintText: '예: 할머니가 밭에서 쓰러지셨고 말이 이상해요',
-                      alignLabelWithHint: true,
-                      labelText: '지금 상황을 적어 주세요',
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  FilledButton(
-                    onPressed: () {
-                      context.go(
-                        '${AppRoutes.assess}?q=${Uri.encodeComponent(_input.text)}',
-                      );
-                    },
-                    child: const Text('AI가 지금 내 상황 판단'),
-                  ),
-                  const SizedBox(height: 28),
-                  const SectionHeader(title: '입력 기능 지원 현황'),
-                  const SizedBox(height: 8),
-                  const Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      Chip(
-                        avatar: Icon(Icons.check, color: AppColors.teal),
-                        label: Text('문장 입력 · 지원'),
-                      ),
-                      Chip(
-                        avatar: Icon(Icons.check, color: AppColors.teal),
-                        label: Text('빠른 상황 선택 · 지원'),
-                      ),
-                      ComingSoonChip(label: '음성'),
-                      ComingSoonChip(label: '사진'),
-                      ComingSoonChip(label: '위치 자동'),
-                      ComingSoonChip(label: '센서·웨어러블'),
-                    ],
-                  ),
-                  const SizedBox(height: 28),
-                  const SectionHeader(
-                    title: '일반 정보 사이트와 다른 점',
-                    subtitle:
-                        '응급처치 글을 나열하지 않습니다. 위험도 판단, 한 번에 하나씩 질문, 행동계획, 전달용 보고서, 추적까지 연결합니다.',
-                  ),
-                  const SizedBox(height: 16),
-                  _FeatureGrid(
-                    items: const [
-                      ('위기 파악', '부족한 정보를 단계적으로 확인'),
-                      ('위험 우선순위', '생명위험 신호를 보수적으로 상향'),
-                      ('행동 지휘', '지금 할 일 하나와 금지행동'),
-                      ('전달문', '구조기관·보호자용 요약'),
-                      ('추적', '상태 변화와 재발방지'),
-                      ('최소수집', '민감정보는 동의·삭제 가능'),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  Text(
-                    '개인정보는 1단계에서 브라우저 로컬에만 저장되며 외부로 전송하지 않습니다.',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.copyWith(color: AppColors.muted),
-                  ),
-                ],
-              ),
+              ],
             ),
           ),
-        );
-      },
-    );
-  }
-}
-
-class _FeatureGrid extends StatelessWidget {
-  const _FeatureGrid({required this.items});
-
-  final List<(String, String)> items;
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 12,
-      runSpacing: 12,
-      children: [
-        for (final item in items)
-          SizedBox(
-            width: 280,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border(
-                  left: BorderSide(color: AppColors.teal, width: 3),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 12, top: 4, bottom: 4),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.$1,
-                      style: const TextStyle(fontWeight: FontWeight.w800),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(item.$2),
-                  ],
-                ),
-              ),
-            ),
+          const SizedBox(height: 12),
+          OutlinedButton(
+            onPressed: () => context.go(AppRoutes.roadmap),
+            child: const Text('AI 인생로드맵 보기'),
           ),
-      ],
+          const SizedBox(height: 28),
+          const SectionHeader(
+            title: '이번 달의 인생점검',
+            subtitle: '저장하거나 개인정보를 받지 않습니다. 읽고 참고하는 공통 점검입니다.',
+          ),
+          const SizedBox(height: 12),
+          SoftPanel(child: BulletList(_checks)),
+          const SizedBox(height: 24),
+          SourceFooter(
+            sources: OfficialSourceRepository.sources.take(4).toList(),
+          ),
+          const SiteFooter(),
+        ],
+      ),
     );
   }
 }

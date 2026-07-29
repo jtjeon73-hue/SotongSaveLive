@@ -1,110 +1,103 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sotong_save_live/app/sotong_app.dart';
-import 'package:sotong_save_live/services/crisis_session_controller.dart';
+import 'package:sotong_save_live/core/routing/app_routes.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  setUp(() async {
-    SharedPreferences.setMockInitialValues({});
+  setUp(() {
     GoogleFonts.config.allowRuntimeFetching = false;
   });
 
-  Future<CrisisSessionController> pumpApp(WidgetTester tester) async {
-    final controller = CrisisSessionController();
-    await controller.init();
-    await tester.pumpWidget(SotongApp(controller: controller));
+  Future<void> pumpApp(WidgetTester tester) async {
+    await tester.pumpWidget(const SotongApp());
     await tester.pumpAndSettle();
-    return controller;
   }
 
-  testWidgets('홈에서 AI 상황판단 화면 진입', (tester) async {
+  testWidgets('홈에서 다섯 가지 인생으로 이동', (tester) async {
     await pumpApp(tester);
-    expect(find.textContaining('SotongSaveLive'), findsWidgets);
-    final enter = find.text('지금 위험한 상황인가요?');
-    expect(enter, findsOneWidget);
-    await tester.tap(enter);
-    await tester.pumpAndSettle();
-    expect(find.textContaining('AI가 지금 내 상황 판단'), findsOneWidget);
-  });
+    expect(find.textContaining('나답게'), findsWidgets);
 
-  testWidgets('빠른 상황 선택과 질문 진행', (tester) async {
-    final controller = await pumpApp(tester);
-    await tester.tap(find.text('지금 위험한 상황인가요?'));
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.text('사람이 쓰러졌어요'));
-    await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('상황 파악 시작'));
-    await tester.tap(find.text('상황 파악 시작'));
-    await tester.pumpAndSettle();
-
-    expect(controller.crisis, isNotNull);
-    expect(find.textContaining('다음 확인'), findsOneWidget);
-
-    await tester.ensureVisible(find.text('확인할 수 없음').first);
-    await tester.tap(find.text('확인할 수 없음').first);
-    await tester.pumpAndSettle();
-    expect(controller.crisis!.answers.isNotEmpty, isTrue);
-  });
-
-  testWidgets('구조 지휘 화면 전환과 보고서 복사', (tester) async {
-    final controller = await pumpApp(tester);
-    await controller.startAssessment(freeText: '농기계 끼임', situation: null);
-    // Force situation via restart with enum through assess UI is heavy;
-    // start with free text then navigate.
-    await controller.startAssessment(freeText: '농기계에 끼였어요', situation: null);
-    await tester.pumpWidget(SotongApp(controller: controller));
-    await tester.pumpAndSettle();
-
-    // Navigate via menu on wide layout may differ; use direct go by rebuilding
-    // with route - instead tap bottom/rail if present.
-    final commandLabel = find.text('지휘');
-    if (commandLabel.evaluate().isNotEmpty) {
-      await tester.tap(commandLabel.first);
+    final menu = find.byTooltip('메뉴');
+    if (menu.evaluate().isNotEmpty) {
+      await tester.tap(menu);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('다섯 가지 인생'));
       await tester.pumpAndSettle();
     } else {
-      await tester.tap(find.byTooltip('메뉴'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('지휘센터'));
+      await tester.tap(find.text('다섯 가지 인생').first);
       await tester.pumpAndSettle();
     }
-
-    expect(find.textContaining('지휘'), findsWidgets);
+    expect(find.textContaining('다섯 가지 인생'), findsWidgets);
   });
 
-  testWidgets('데이터 전체 삭제', (tester) async {
-    final controller = await pumpApp(tester);
-    await controller.startAssessment(freeText: '테스트');
-    expect(controller.crisis, isNotNull);
-    await controller.clearAllData();
-    expect(controller.crisis, isNull);
+  testWidgets('인생 유형 상세화면 이동', (tester) async {
+    await pumpApp(tester);
+    final menu = find.byTooltip('메뉴');
+    if (menu.evaluate().isNotEmpty) {
+      await tester.tap(menu);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('다섯 가지 인생'));
+      await tester.pumpAndSettle();
+    }
+    await tester.ensureVisible(find.text('이 인생 자세히 읽기').first);
+    await tester.tap(find.text('이 인생 자세히 읽기').first);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('AI 인생분석'), findsWidgets);
   });
 
-  testWidgets('모바일 폭에서 오버플로 없음', (tester) async {
-    final errors = <FlutterErrorDetails>[];
+  testWidgets('연령대별 로드맵 전환', (tester) async {
+    await pumpApp(tester);
+    final menu = find.byTooltip('메뉴');
+    if (menu.evaluate().isNotEmpty) {
+      await tester.tap(menu);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('AI 인생로드맵'));
+      await tester.pumpAndSettle();
+    } else {
+      await tester.tap(find.text('AI 인생로드맵').first);
+      await tester.pumpAndSettle();
+    }
+    expect(find.textContaining('인생로드맵'), findsWidgets);
+    final chip = find.byType(ChoiceChip).at(1);
+    await tester.tap(chip);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('시나리오'), findsWidgets);
+  });
+
+  testWidgets('아름다운 마무리 화면 접근', (tester) async {
+    await pumpApp(tester);
+    final ctx = tester.element(find.byType(Scaffold).first);
+    GoRouter.of(ctx).go(AppRoutes.legacy);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('사전연명의료의향서'), findsWidgets);
+  });
+
+  testWidgets('입력 필드가 없다', (tester) async {
+    await pumpApp(tester);
+    expect(find.byType(TextField), findsNothing);
+    expect(find.byType(TextFormField), findsNothing);
+    expect(find.byType(EditableText), findsNothing);
+  });
+
+  testWidgets('모바일 오버플로 없음', (tester) async {
+    final overflows = <FlutterErrorDetails>[];
     final old = FlutterError.onError;
-    FlutterError.onError = (details) {
-      if (details.toString().contains('overflowed')) {
-        errors.add(details);
-      }
-      old?.call(details);
+    FlutterError.onError = (d) {
+      if (d.toString().contains('overflowed')) overflows.add(d);
+      old?.call(d);
     };
-
     tester.view.physicalSize = const Size(390, 844);
-    tester.view.devicePixelRatio = 1.0;
+    tester.view.devicePixelRatio = 1;
     addTearDown(() {
       tester.view.resetPhysicalSize();
       tester.view.resetDevicePixelRatio();
       FlutterError.onError = old;
     });
-
     await pumpApp(tester);
-    await tester.tap(find.text('지금 위험한 상황인가요?'));
-    await tester.pumpAndSettle();
-    expect(errors, isEmpty);
+    expect(overflows, isEmpty);
   });
 }
