@@ -69,27 +69,26 @@ async function checkViewport(name, width, height) {
     return doc.scrollWidth > doc.clientWidth + 2;
   });
 
-  // Brand text visible in Flutter canvas is hard to scrape; rely on document title
-  // and HTML/manifest assets for customer-facing name checks.
   const html = await page.content();
   const brandHtmlOk =
     html.includes('소통노후') && !html.includes('SotongSaveLive');
 
-  const faviconRes = await page.goto(`${BASE}/favicon.png?v=1.2.1`, {
+  const faviconOk = (
+    await page.goto(`${BASE}/favicon.png?v=1.2.1`, { timeout: 60000 })
+  )?.ok();
+
+  const manifestPage = await page.goto(`${BASE}/manifest.json?v=1.2.1`, {
     timeout: 60000,
   });
-  const manifestRes = await page.goto(`${BASE}/manifest.json?v=1.2.1`, {
-    timeout: 60000,
-  });
-  const mainJsRes = await page.goto(`${BASE}/main.dart.js`, {
-    timeout: 60000,
-  });
-  let manifestBrandOk = false;
-  if (manifestRes?.ok()) {
-    const body = await manifestRes.text();
-    manifestBrandOk =
-      body.includes('소통노후') && !body.includes('SotongSaveLive');
-  }
+  const manifestOk = manifestPage?.ok() ?? false;
+  const manifestBody = manifestOk ? await page.evaluate(() => document.body.innerText) : '';
+  const manifestBrandOk =
+    manifestBody.includes('소통노후') &&
+    !manifestBody.includes('SotongSaveLive');
+
+  const mainJsOk = (
+    await page.goto(`${BASE}/main.dart.js`, { timeout: 60000 })
+  )?.ok();
 
   await browser.close();
 
@@ -101,9 +100,9 @@ async function checkViewport(name, width, height) {
     hasHorizontal: overflow,
     brandHtmlOk,
     manifestBrandOk,
-    faviconOk: faviconRes?.ok() ?? false,
-    manifestOk: manifestRes?.ok() ?? false,
-    mainJsOk: mainJsRes?.ok() ?? false,
+    faviconOk: faviconOk ?? false,
+    manifestOk,
+    mainJsOk: mainJsOk ?? false,
     errors: errors.slice(0, 8),
     networkFails: networkFails.slice(0, 8),
   };
