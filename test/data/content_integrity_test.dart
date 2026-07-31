@@ -174,7 +174,8 @@ void main() {
     }
 
     final manifest = File('${root.path}/web/manifest.json').readAsStringSync();
-    expect(manifest.contains('SotongSaveLive'), isTrue);
+    expect(manifest.contains('소통노후'), isTrue);
+    expect(manifest.contains('SotongSaveLive'), isFalse);
     expect(manifest.contains('#1F4D3A'), isTrue);
     expect(manifest.contains('Icon-192.png'), isTrue);
     expect(manifest.contains('Icon-maskable-512.png'), isTrue);

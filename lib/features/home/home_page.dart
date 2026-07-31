@@ -62,7 +62,7 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'SotongSaveLive',
+                  '소통노후',
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w900,
@@ -79,9 +79,9 @@ class HomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 14),
                 Text(
-                  'SotongSaveLive는 2026년 이후의 변화된 일자리, 연금, 건강, 가족, '
-                  '농촌생활과 존엄한 삶의 마무리까지 AI 관점으로 연결해 보여주는 '
-                  '인생·노후설계 플랫폼입니다.',
+                  '소통노후는 돈과 평생 일, 건강, 관계, 주거, 돌봄, 농촌생활, '
+                  '마음의 쉼과 삶의 마무리까지 인생 후반기를 체계적으로 준비하는 '
+                  '노후 지식 전문관입니다.',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Colors.white.withValues(alpha: 0.95),
                   ),

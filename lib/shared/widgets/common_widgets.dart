@@ -416,7 +416,7 @@ class SiteFooter extends StatelessWidget {
           const Divider(),
           const SizedBox(height: 12),
           Text(
-            'SotongSaveLive',
+            '소통노후',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w800,
               color: AppColors.forest,
@@ -424,8 +424,8 @@ class SiteFooter extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           const Text(
-            '오늘을 제대로 살아가고, 남은 삶을 아름답게 설계하며, '
-            '마지막까지 나다운 삶을 지켜주는 AI 인생설계 플랫폼',
+            '돈과 평생 일, 건강, 관계, 주거, 돌봄, 농촌생활, '
+            '마음의 쉼과 삶의 마무리까지 함께 준비하는 노후 지식 전문관',
           ),
           const SizedBox(height: 8),
           const Text(

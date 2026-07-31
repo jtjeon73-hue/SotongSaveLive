@@ -1,4 +1,4 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="SotongSaveLive">
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="소통노후">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#2F6B52"/>
@@ -14,6 +14,6 @@
   <circle cx="940" cy="180" r="58" fill="#D4A84B"/>
   <path d="M 860 280 C 980 340, 980 420, 880 490 C 800 540, 820 580, 900 610"
         fill="none" stroke="#F7F3EB" stroke-width="28" stroke-linecap="round"/>
-  <text x="72" y="270" fill="#FFFCF7" font-family="Georgia, 'Times New Roman', serif" font-size="68" font-weight="700">SotongSaveLive</text>
-  <text x="72" y="350" fill="#F7F3EB" font-family="Georgia, 'Times New Roman', serif" font-size="32">AI 인생·노후설계 · 노후 주거·돌봄</text>
+  <text x="72" y="270" fill="#FFFCF7" font-family="Georgia, 'Times New Roman', serif" font-size="84" font-weight="700">소통노후</text>
+  <text x="72" y="350" fill="#F7F3EB" font-family="Georgia, 'Times New Roman', serif" font-size="32">노후 지식 전문관 · 주거·돌봄·마음쉼터</text>
 </svg>

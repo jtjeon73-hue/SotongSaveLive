@@ -33,7 +33,7 @@ class AppShell extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'SotongSaveLive',
+                      '소통노후',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w800,
@@ -41,7 +41,7 @@ class AppShell extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'AI 인생·노후설계',
+                      '노후 지식 전문관',
                       style: Theme.of(
                         context,
                       ).textTheme.bodySmall?.copyWith(color: Colors.white70),
@@ -65,7 +65,7 @@ class AppShell extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SotongSaveLive'),
+        title: const Text('소통노후'),
         actions: [
           IconButton(
             tooltip: '메뉴',

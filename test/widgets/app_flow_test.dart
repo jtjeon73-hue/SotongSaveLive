@@ -20,6 +20,12 @@ void main() {
   BuildContext rootContext(WidgetTester tester) =>
       tester.element(find.byType(Scaffold).first);
 
+  testWidgets('고객 화면에 소통노후가 보인다', (tester) async {
+    await pumpApp(tester);
+    expect(find.text('소통노후'), findsWidgets);
+    expect(find.text('SotongSaveLive'), findsNothing);
+  });
+
   testWidgets('노후맞이 인생들 목록 진입', (tester) async {
     await pumpApp(tester);
     GoRouter.of(rootContext(tester)).go(AppRoutes.lifePaths);

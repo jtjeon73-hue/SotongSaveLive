@@ -9,7 +9,7 @@ class SotongApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'SotongSaveLive | AI 인생·노후설계 플랫폼',
+      title: '소통노후 | 노후 지식 전문관',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
       routerConfig: createRouter(),

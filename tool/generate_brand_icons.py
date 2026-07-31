@@ -1,4 +1,4 @@
-﻿"""Generate SotongSaveLive brand icons: forest green, gold sun, ivory S-path."""
+﻿"""Generate 소통노후 (SotongSaveLive) brand icons: forest green, gold sun, ivory S-path."""
 from __future__ import annotations
 
 import math
@@ -133,7 +133,7 @@ def save_png(img: Image.Image, path: Path) -> None:
 
 def write_svg(path: Path) -> None:
     svg = '''<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-label="SotongSaveLive icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-label="소통노후 icon">
   <defs>
     <radialGradient id="sunGlow" cx="50%" cy="28%" r="22%">
       <stop offset="0%" stop-color="#E8C678" stop-opacity="0.55"/>

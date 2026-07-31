@@ -1,19 +1,24 @@
-# SotongSaveLive
+# 소통노후 (SotongSaveLive)
 
-AI 인생·노후설계 플랫폼 — 질문 없이, 다양한 **노후맞이 인생**과 **마음쉼터**, **노후 주거·돌봄** 읽을거리를 보며 남은 삶을 설계합니다.
+돈과 평생 일, 건강, 관계, 주거, 돌봄, 농촌생활, 마음의 쉼과 삶의 마무리까지  
+인생 후반기를 체계적으로 준비하는 **노후 지식 전문관**입니다.
 
 > 오래 사는 것보다 중요한 것은  
 > 남은 시간을 나답게 살아가는 것입니다.
+
+고객 화면 표시 명칭은 **소통노후**입니다.  
+GitHub 저장소명 `SotongSaveLive`와 Firebase 프로젝트 ID `sotong-save-live`는 기술 식별자로 유지합니다.
 
 ## 운영 배포 (Firebase Hosting)
 
 | 항목 | 값 |
 | --- | --- |
+| 고객 표시명 | 소통노후 |
 | Firebase 프로젝트 ID | `sotong-save-live` |
 | 운영주소 | https://sotong-save-live.web.app |
 | 보조 운영주소 | https://sotong-save-live.firebaseapp.com |
 | 요금제 | Spark (무료) — Hosting만 사용 |
-| 앱 버전 | `1.2.0+3` |
+| 앱 버전 | `1.2.1+4` |
 
 ### 수동 빌드
 
